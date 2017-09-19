@@ -1,22 +1,23 @@
 import React from 'react';
-import Book from './Book';
 import PropTypes from 'prop-types';
+import Book from './Book';
 
 const propTypes = {
   books: PropTypes.array,
+  onUpdateBook: PropTypes.func
 };
 
 const defaultProps = {
   books: [],
 };
 
-function BookGrid({ books }) {
+function BookGrid({ books, onUpdateBook }) {
   return (
     <div className="bookshelf-books">
       <ol className="books-grid">
         {books.map(book => (
           <li key={book.id}>
-            <Book book={book} />
+            <Book book={book} onUpdateBook={onUpdateBook} />
           </li>
         ))}
       </ol>

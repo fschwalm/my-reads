@@ -10,14 +10,14 @@ class SearchPage extends React.Component {
     results: []
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch(event) {
     let value = event.target.value;
-    // TODO: Verificar o motivo de chamar conforme o número de letras.
+    // TODO: Extract to a BookService
     BooksAPI.search(value, 20).then((results) => {
       if(results.error) {
         this.setState({ results: [] });
@@ -34,13 +34,14 @@ class SearchPage extends React.Component {
       <div className="search-books-bar">
         <Link className="close-search" to="/">Close</Link>
         <div className="search-books-input-wrapper">
-        <Debounce time="800" handler="onChange">
+        <Debounce time="500" handler="onKeyUp">
           <input type="text" onKeyUp={this.handleSearch} placeholder="Search by title or author"/>
         </Debounce>
         </div>
       </div>
       <div className="search-books-results">
-        <BookGrid books={this.state.results} />
+        {/* TODO: show message to empty results */}
+        <BookGrid onUpdateBook={this.props.onUpdateBook} books={this.state.results} />
       </div>
     </div>
     )
