@@ -4,8 +4,15 @@ import BookShelfChanger from './BookShelfChanger';
 import BookCover from './BookCover';
 
 const propTypes = {
-  book: PropTypes.object,
-  onUpdateBook: PropTypes.func,
+  book: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string,
+    authors: PropTypes.arrayOf(PropTypes.string),
+    imageLinks: PropTypes.object,
+    shelf: PropTypes.string,
+  }),
+  onUpdateBook: PropTypes.func.isRequired,
 };
 
 const defaultProps = {

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Book from './Book';
 
 const propTypes = {
-  books: PropTypes.array,
-  onUpdateBook: PropTypes.func
+  books: PropTypes.arrayOf(PropTypes.object),
+  onUpdateBook: PropTypes.func.isRequired,
 };
 
 const defaultProps = {

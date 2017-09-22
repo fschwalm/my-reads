@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  currentShelf: PropTypes.string,
-  onUpdateBook: PropTypes.func,
+  currentShelf: PropTypes.oneOf(['currentlyReading', 'wantToRead', 'read', 'none', 'moveTo']),
+  onUpdateShelf: PropTypes.func.isRequired,
 };
 
 const defaultProps = {

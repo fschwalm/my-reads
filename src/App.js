@@ -19,11 +19,11 @@ class BooksApp extends React.Component {
 
   componentDidMount = () => {
     BooksAPI.getAll().then((response) => {
-      // this.setState( { books: response } );
+      this.setState({ books: _.groupBy(response, 'shelf') });
       // TODO: Extract logic to BookService
-      this.setState(state => ({
-        books: _.groupBy(response.map(_book => new Book(_book)), 'shelf'),
-      }));
+      // this.setState(state => ({
+      //   books: _.groupBy(response.map(_book => new Book(_book)), 'shelf'),
+      // }));
     });
   };
 
