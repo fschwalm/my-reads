@@ -29,11 +29,8 @@ class Book extends React.Component {
     return (
       <div className="book">
         <div className="book-top">
-          <BookCover image={this.book.imageLinks.thumbnail}/>
-          <BookShelfChanger
-            onUpdateShelf={this.handleShelfUpdate}
-            currentShelf={this.book.shelf}
-          />
+          <BookCover image={this.book.imageLinks.thumbnail} />
+          <BookShelfChanger onUpdateShelf={this.handleShelfUpdate} currentShelf={this.book.shelf} />
         </div>
         <div className="book-title">{this.book.title}</div>
         <div className="book-authors">{this.book.authors}</div>
