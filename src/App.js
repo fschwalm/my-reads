@@ -5,7 +5,6 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 import SearchPage from './components/SearchPage';
 import HomePage from './components/HomePage';
-import { Book } from './model/Book';
 
 class BooksApp extends React.Component {
   constructor() {

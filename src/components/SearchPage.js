@@ -1,7 +1,7 @@
 import React from 'react';
 import { Debounce } from 'react-throttle';
 import { Link } from 'react-router-dom';
-import BookGrid from './book/BookGrid';
+import BookGrid from './bookgrid/BookGrid';
 import * as BooksAPI from '../BooksAPI';
 
 class SearchPage extends React.Component {

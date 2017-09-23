@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BookGrid from '../book/BookGrid';
+import BookGrid from '../bookgrid/BookGrid';
 
 const propTypes = {
   title: PropTypes.string,
