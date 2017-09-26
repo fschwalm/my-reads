@@ -4,16 +4,23 @@ import { Link } from 'react-router-dom';
 import Bookshelf from './bookshelf/Bookshelf';
 
 const propTypes = {
-  // TODO: Change to Shelves
-  books: PropTypes.object,
-  onUpdateBook: PropTypes.func,
+  shelfGroup: PropTypes.shape({
+    currentlyReading: PropTypes.array,
+    wantToRead: PropTypes.array,
+    read: PropTypes.array,
+  }),
+  onUpdateBook: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
-  book: {},
+  shelfGroup: {
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
+  },
 };
 
-function HomePage({ books, onUpdateBook }) {
+function HomePage({ shelfGroup, onUpdateBook }) {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -23,17 +30,17 @@ function HomePage({ books, onUpdateBook }) {
         <div>
           <Bookshelf
             title="Currently Reading"
-            books={books.currentlyReading}
+            books={shelfGroup.currentlyReading}
             onUpdateBook={onUpdateBook}
           />
           <Bookshelf
             title="Want to Read"
-            books={books.wantToRead}
+            books={shelfGroup.wantToRead}
             onUpdateBook={onUpdateBook}
           />
           <Bookshelf
             title="Read"
-            books={books.read}
+            books={shelfGroup.read}
             onUpdateBook={onUpdateBook}
           />
         </div>

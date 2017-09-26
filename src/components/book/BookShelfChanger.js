@@ -17,7 +17,6 @@ class BookShelfChanger extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  // TODO: calls parent or calls directly the received function via props
   handleChange(event) {
     this.setState({ currentShelf: event.target.value });
     this.props.onUpdateShelf(event.target.value);
