@@ -18,8 +18,10 @@ class BookShelfChanger extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ currentShelf: event.target.value });
-    this.props.onUpdateShelf(event.target.value);
+    this.props
+      .onUpdateShelf(event.target.value)
+      .then(newShelf => this.setState({ currentShelf: newShelf }))
+      .catch(error => console.log(error));
   }
 
   render() {

@@ -28,7 +28,7 @@ class Book extends React.Component {
   }
 
   handleShelfUpdate(updatedShelf) {
-    this.onUpdateBook(this.book, updatedShelf);
+    return this.onUpdateBook(this.book, updatedShelf);
   }
 
   render() {

@@ -24,15 +24,24 @@ class BooksApp extends React.Component {
 
   // TODO: Check None
   handleShelfUpdate(book, goToShelf) {
-    BooksAPI.update(book, goToShelf).then((response) => {
-      // remove
-      this.state.shelfGroup[book.shelf] = _.without(this.state.shelfGroup[book.shelf], book);
-      // update book
-      book.shelf = goToShelf;
-      // add
-      this.state.shelfGroup[goToShelf].unshift(book);
-      // update state
-      this.setState({ shelfGroup: this.state.shelfGroup });
+    return new Promise((resolve, reject) => {
+      BooksAPI.update(book, goToShelf).then(
+        (response) => {
+          console.log(response);
+          // remove
+          this.state.shelfGroup[book.shelf] = _.without(this.state.shelfGroup[book.shelf], book);
+          // update book
+          book.shelf = goToShelf;
+          // add
+          this.state.shelfGroup[goToShelf].unshift(book);
+          // update state
+          this.setState({ shelfGroup: this.state.shelfGroup });
+          resolve(goToShelf);
+        },
+        (error) => {
+          reject(error);
+        },
+      );
     });
   }
 
