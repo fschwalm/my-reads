@@ -9,12 +9,12 @@ import HomePage from './components/HomePage';
 class BooksApp extends React.Component {
   constructor() {
     super();
+    // TODO: Initialize possible shelves.
+    this.state = {
+      shelfGroup: {},
+    };
     this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
   }
-  // TODO: Initialize possible shelves.
-  state = {
-    shelfGroup: {},
-  };
 
   componentDidMount = () => {
     BooksAPI.getAll().then((response) => {
@@ -24,25 +24,24 @@ class BooksApp extends React.Component {
 
   // TODO: Check None
   handleShelfUpdate(book, goToShelf) {
-    return new Promise((resolve, reject) => {
-      BooksAPI.update(book, goToShelf).then(
-        (response) => {
-          console.log(response);
+    BooksAPI.update(book, goToShelf).then(
+      (response) => {
+        this.setState((prevState) => {
+          const shelfGroup = Object.assign({}, prevState.shelfGroup);
           // remove
-          this.state.shelfGroup[book.shelf] = _.without(this.state.shelfGroup[book.shelf], book);
+          shelfGroup[book.shelf] = _.without(shelfGroup[book.shelf], book);
           // update book
           book.shelf = goToShelf;
           // add
-          this.state.shelfGroup[goToShelf].unshift(book);
+          shelfGroup[goToShelf].unshift(book);
           // update state
-          this.setState({ shelfGroup: this.state.shelfGroup });
-          resolve(goToShelf);
-        },
-        (error) => {
-          reject(error);
-        },
-      );
-    });
+          return { shelfGroup };
+        });
+      },
+      (error) => {
+        console.error(error);
+      },
+    );
   }
 
   render() {
