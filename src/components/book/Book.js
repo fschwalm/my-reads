@@ -27,8 +27,8 @@ class Book extends React.Component {
     this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
   }
 
-  handleShelfUpdate(updatedShelf) {
-    return this.onUpdateBook(this.book, updatedShelf);
+  handleShelfUpdate(updatedShelfEvent) {
+    this.onUpdateBook(this.book, updatedShelfEvent.target.value);
   }
 
   render() {
