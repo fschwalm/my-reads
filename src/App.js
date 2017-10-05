@@ -12,8 +12,10 @@ class BooksApp extends React.Component {
     // TODO: Initialize possible shelves.
     this.state = {
       shelfGroup: {},
+      searchResult: [],
     };
     this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount = () => {
@@ -22,7 +24,6 @@ class BooksApp extends React.Component {
     });
   };
 
-  // TODO: Check None
   handleShelfUpdate(book, goToShelf) {
     BooksAPI.update(book, goToShelf).then(
       (response) => {
@@ -32,6 +33,7 @@ class BooksApp extends React.Component {
           shelfGroup[book.shelf] = _.without(shelfGroup[book.shelf], book);
           // update book
           book.shelf = goToShelf;
+          // TODO: Check None
           // add
           shelfGroup[goToShelf].unshift(book);
           // update state
@@ -44,6 +46,20 @@ class BooksApp extends React.Component {
     );
   }
 
+  handleSearch(event) {
+    const value = event.target.value;
+    if (!value) return;
+    // TODO: Extract to a BookService
+    BooksAPI.search(value, 20).then((results) => {
+      if (results.error) {
+        this.setState({ searchResult: [] });
+      } else {
+        this.setState({ searchResult: results });
+      }
+      console.log(results);
+    });
+  }
+
   render() {
     return (
       <div className="app">
@@ -54,7 +70,16 @@ class BooksApp extends React.Component {
             <HomePage shelfGroup={this.state.shelfGroup} onUpdateBook={this.handleShelfUpdate} />
           )}
         />
-        <Route path="/search" render={() => <SearchPage onUpdateBook={this.handleShelfUpdate} />} />
+        <Route
+          path="/search"
+          render={() => (
+            <SearchPage
+              searchResult={this.state.searchResult}
+              onSearch={this.handleSearch}
+              onUpdateBook={this.handleShelfUpdate}
+            />
+          )}
+        />
       </div>
     );
   }

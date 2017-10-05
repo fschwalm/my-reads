@@ -1,43 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BookGrid from './bookgrid/BookGrid';
 import SearchBar from './search-bar/SearchBar';
-import * as BooksAPI from '../BooksAPI';
 
-class SearchPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: '',
-      results: [],
-    };
-    this.handleSearch = this.handleSearch.bind(this);
-  }
+const propTypes = {
+  searchResult: PropTypes.arrayOf(PropTypes.object),
+  onSearch: PropTypes.func.isRequired,
+  onUpdateBook: PropTypes.func.isRequired,
+};
 
-  handleSearch(event) {
-    const value = event.target.value;
-    if (!value) return;
-    // TODO: Extract to a BookService
-    BooksAPI.search(value, 20).then((results) => {
-      if (results.error) {
-        this.setState({ results: [] });
-      } else {
-        this.setState({ results });
-      }
-      console.log(results);
-    });
-  }
+const defaultProps = {
+  searchResult: [],
+};
 
-  render() {
-    return (
-      <div className="search-books">
-        <SearchBar onSearch={this.handleSearch} />
-        <div className="search-books-results">
-          {/* TODO: show message to empty results */}
-          <BookGrid onUpdateBook={this.props.onUpdateBook} books={this.state.results} />
-        </div>
+function SearchPage({ searchResult, onSearch, onUpdateBook }) {
+  return (
+    <div className="search-books">
+      <SearchBar onSearch={onSearch} />
+      {searchResult.length > 0 &&
+      <div className="search-books-results">
+        {/* TODO: show message to empty results */}
+        <BookGrid onUpdateBook={onUpdateBook} books={searchResult} />
       </div>
-    );
-  }
+      }
+    </div>
+  );
 }
+
+SearchPage.propTypes = propTypes;
+SearchPage.defaultProps = defaultProps;
 
 export default SearchPage;
