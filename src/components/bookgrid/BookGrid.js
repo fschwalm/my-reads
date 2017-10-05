@@ -15,11 +15,15 @@ function BookGrid({ books, onUpdateBook }) {
   return (
     <div className="bookshelf-books">
       <ol className="books-grid">
-        {books.map(book => (
-          <li key={book.id}>
-            <Book book={book} onUpdateBook={onUpdateBook} />
-          </li>
-        ))}
+        {books.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          books.map(book => (
+            <li key={book.id}>
+              <Book book={book} onUpdateBook={onUpdateBook} />
+            </li>
+          ))
+        )}
       </ol>
     </div>
   );
