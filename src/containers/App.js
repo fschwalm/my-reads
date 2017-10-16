@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'underscore';
 import { Route } from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
+import * as BooksAPI from '../BooksAPI';
 import './App.css';
-import SearchPage from './components/SearchPage';
-import HomePage from './components/HomePage';
+import SearchPage from '../components/SearchPage';
+import HomePage from '../components/HomePage';
 
 class BooksApp extends React.Component {
   constructor() {
