@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Book from '../book/Book';
+import BookModel from '../../model/BookModel';
 
 const propTypes = {
-  books: PropTypes.arrayOf(PropTypes.object),
+  books: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
   onUpdateBook: PropTypes.func.isRequired,
 };
 

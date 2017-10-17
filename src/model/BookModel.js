@@ -1,5 +1,5 @@
-export class Book {
-  constructor({ id, title, subtitle, authors, imageLinks, shelf }) {
+class BookModel {
+  constructor({ id, title = '', subtitle = '', authors = [], imageLinks = {}, shelf = 'none' }) {
     this.id = id;
     this.title = title;
     this.subtitle = subtitle;
@@ -8,3 +8,5 @@ export class Book {
     this.shelf = shelf;
   }
 }
+
+export default BookModel;

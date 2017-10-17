@@ -2,16 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BookShelfChanger from './BookShelfChanger';
 import BookCover from './BookCover';
+import BookModel from '../../model/BookModel';
 
 const propTypes = {
-  book: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    authors: PropTypes.arrayOf(PropTypes.string),
-    imageLinks: PropTypes.object,
-    shelf: PropTypes.string,
-  }),
+  book: PropTypes.instanceOf(BookModel),
   onUpdateBook: PropTypes.func.isRequired,
 };
 

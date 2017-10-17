@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Bookshelf from './bookshelf/Bookshelf';
+import BookModel from '../model/BookModel';
 
 const propTypes = {
   shelfGroup: PropTypes.shape({
-    currentlyReading: PropTypes.array,
-    wantToRead: PropTypes.array,
-    read: PropTypes.array,
+    currentlyReading: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
+    wantToRead: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
+    read: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
   }),
   onUpdateBook: PropTypes.func.isRequired,
 };
@@ -38,11 +39,7 @@ function HomePage({ shelfGroup, onUpdateBook }) {
             books={shelfGroup.wantToRead}
             onUpdateBook={onUpdateBook}
           />
-          <Bookshelf
-            title="Read"
-            books={shelfGroup.read}
-            onUpdateBook={onUpdateBook}
-          />
+          <Bookshelf title="Read" books={shelfGroup.read} onUpdateBook={onUpdateBook} />
         </div>
       </div>
       <div className="open-search">

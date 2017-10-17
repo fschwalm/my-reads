@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BookGrid from '../bookgrid/BookGrid';
+import BookModel from '../../model/BookModel';
 
 const propTypes = {
   title: PropTypes.string,
-  books: PropTypes.arrayOf(PropTypes.object),
+  books: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
   onUpdateBook: PropTypes.func.isRequired,
 };
 

@@ -5,6 +5,7 @@ import * as BooksAPI from '../BooksAPI';
 import './App.css';
 import SearchPage from '../components/SearchPage';
 import HomePage from '../components/HomePage';
+import BookModel from '../model/BookModel';
 
 class BooksApp extends React.Component {
   constructor() {
@@ -20,7 +21,7 @@ class BooksApp extends React.Component {
 
   componentDidMount = () => {
     BooksAPI.getAll().then((response) => {
-      this.setState({ shelfGroup: _.groupBy(response, 'shelf') });
+      this.setState({ shelfGroup: _.groupBy(response.map(book => new BookModel(book)), 'shelf') });
     });
   };
 
@@ -54,7 +55,7 @@ class BooksApp extends React.Component {
       if (results.error) {
         this.setState({ searchResult: [] });
       } else {
-        this.setState({ searchResult: results });
+        this.setState({ searchResult: results.map(book => new BookModel(book)) });
       }
       console.log(results);
     });
