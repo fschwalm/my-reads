@@ -13,7 +13,11 @@ class BooksApp extends React.Component {
     // TODO: Initialize possible shelves.
     this.state = {
       shelfGroup: {},
-      searchResult: [],
+      searchResult: {
+        books: [],
+        query: '',
+        hasError: false,
+      },
     };
     this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -49,15 +53,42 @@ class BooksApp extends React.Component {
 
   handleSearch(event) {
     const value = event.target.value;
-    if (!value) return;
+    this.setState({
+      searchResult: {
+        books: [],
+        query: event.target.value,
+        hasError: false,
+      },
+    });
+    if (!value) {
+      this.setState({
+        searchResult: {
+          books: [],
+          query: '',
+          hasError: false,
+        },
+      });
+      return;
+    }
     // TODO: Extract to a BookService
     BooksAPI.search(value, 20).then((results) => {
       if (results.error) {
-        this.setState({ searchResult: [] });
+        this.setState({
+          searchResult: {
+            books: [],
+            query: event.target.value,
+            hasError: true,
+          },
+        });
       } else {
-        this.setState({ searchResult: results.map(book => new BookModel(book)) });
+        this.setState({
+          searchResult: {
+            books: results.map(book => new BookModel(book)),
+            query: event.target.value,
+            hasError: false,
+          },
+        });
       }
-      console.log(results);
     });
   }
 
