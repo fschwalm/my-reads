@@ -35,9 +35,9 @@ function SearchPage({ searchResult, onSearch, onUpdateBook }) {
         {isDefaultState ? null : (
           <div>
             {noResultForQuery ? (
-              <p className="books-grid">No results for {query}</p>
+              <p className="align-center"><b><u>{query}</u></b>&nbsp;not found.</p>
             ) : (
-              <p className="books-grid">Loading...</p>
+              <p className="align-center">Loading...</p>
             )}
           </div>
         )}
