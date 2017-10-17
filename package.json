@@ -1,4 +1,9 @@
 {
+  "name": "my-reads",
+  "authors": [
+    "Fagner Schwalm da Silva"
+  ],
+  "description": "Final project of React Nanodegree fundamentals",
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
