@@ -1,18 +1,15 @@
 import React from 'react';
-import _ from 'underscore';
 import { Route } from 'react-router-dom';
-import * as BooksAPI from '../BooksAPI';
 import './App.css';
 import SearchPage from '../components/SearchPage';
 import HomePage from '../components/HomePage';
-import BookModel from '../model/BookModel';
+import * as BookRepository from '../BookRepository';
 
 class BooksApp extends React.Component {
-  constructor() {
-    super();
-    // TODO: Initialize possible shelves.
+  constructor(props) {
+    super(props);
     this.state = {
-      shelfGroup: {},
+      allBooks: [],
       searchResult: {
         books: [],
         query: '',
@@ -24,71 +21,44 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount = () => {
-    BooksAPI.getAll().then((response) => {
-      this.setState({ shelfGroup: _.groupBy(response.map(book => new BookModel(book)), 'shelf') });
+    BookRepository.getAllBooks().then((allBooks) => {
+      this.setState({ allBooks });
     });
   };
 
-  handleShelfUpdate(book, goToShelf) {
-    BooksAPI.update(book, goToShelf).then(
-      (response) => {
-        this.setState((prevState) => {
-          const shelfGroup = Object.assign({}, prevState.shelfGroup);
-          // remove
-          shelfGroup[book.shelf] = _.without(shelfGroup[book.shelf], book);
-          // update book
-          book.shelf = goToShelf;
-          // TODO: Check None
-          // add
-          shelfGroup[goToShelf].unshift(book);
-          // update state
-          return { shelfGroup };
-        });
-      },
-      (error) => {
-        console.error(error);
-      },
-    );
+  handleShelfUpdate(book) {
+    BookRepository.update(book).then((updatedBook) => {
+      this.setState(prevState => ({
+        allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
+      }));
+    });
   }
 
-  handleSearch(event) {
-    const value = event.target.value;
+  handleSearch({ target }) {
+    const { value } = target;
     this.setState({
       searchResult: {
         books: [],
-        query: event.target.value,
+        query: value,
         hasError: false,
       },
     });
     if (!value) {
-      this.setState({
-        searchResult: {
-          books: [],
-          query: '',
-          hasError: false,
-        },
-      });
+      this.resetSearch();
       return;
     }
-    // TODO: Extract to a BookService
-    BooksAPI.search(value, 20).then((results) => {
-      if (results.error) {
-        this.setState({
-          searchResult: {
-            books: [],
-            query: event.target.value,
-            hasError: true,
-          },
-        });
-      } else {
-        this.setState({
-          searchResult: {
-            books: results.map(book => new BookModel(book)),
-            query: event.target.value,
-            hasError: false,
-          },
-        });
-      }
+    BookRepository.search(value, this.state.allBooks).then((searchResult) => {
+      this.setState({ searchResult });
+    });
+  }
+
+  resetSearch() {
+    this.setState({
+      searchResult: {
+        books: [],
+        query: '',
+        hasError: false,
+      },
     });
   }
 
@@ -99,7 +69,7 @@ class BooksApp extends React.Component {
           exact
           path="/"
           render={() => (
-            <HomePage shelfGroup={this.state.shelfGroup} onUpdateBook={this.handleShelfUpdate} />
+            <HomePage allBooks={this.state.allBooks} onUpdateBook={this.handleShelfUpdate} />
           )}
         />
         <Route

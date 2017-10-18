@@ -22,7 +22,10 @@ class Book extends React.Component {
   }
 
   handleShelfUpdate(updatedShelfEvent) {
-    this.onUpdateBook(this.book, updatedShelfEvent.target.value);
+    const updatedBook = Object.assign(new BookModel({}), this.book, {
+      shelf: updatedShelfEvent.target.value,
+    });
+    this.onUpdateBook(updatedBook);
   }
 
   render() {

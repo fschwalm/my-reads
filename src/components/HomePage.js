@@ -5,23 +5,15 @@ import Bookshelf from './bookshelf/Bookshelf';
 import BookModel from '../model/BookModel';
 
 const propTypes = {
-  shelfGroup: PropTypes.shape({
-    currentlyReading: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
-    wantToRead: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
-    read: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
-  }),
+  allBooks: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
   onUpdateBook: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
-  shelfGroup: {
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
-  },
+  allBooks: [],
 };
 
-function HomePage({ shelfGroup, onUpdateBook }) {
+function HomePage({ allBooks, onUpdateBook }) {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -31,15 +23,19 @@ function HomePage({ shelfGroup, onUpdateBook }) {
         <div>
           <Bookshelf
             title="Currently Reading"
-            books={shelfGroup.currentlyReading}
+            books={allBooks.filter(book => book.shelf === 'currentlyReading')}
             onUpdateBook={onUpdateBook}
           />
           <Bookshelf
             title="Want to Read"
-            books={shelfGroup.wantToRead}
+            books={allBooks.filter(book => book.shelf === 'wantToRead')}
             onUpdateBook={onUpdateBook}
           />
-          <Bookshelf title="Read" books={shelfGroup.read} onUpdateBook={onUpdateBook} />
+          <Bookshelf
+            title="Read"
+            books={allBooks.filter(book => book.shelf === 'read')}
+            onUpdateBook={onUpdateBook}
+          />
         </div>
       </div>
       <div className="open-search">

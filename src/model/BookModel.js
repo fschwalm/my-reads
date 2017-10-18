@@ -1,5 +1,7 @@
 class BookModel {
-  constructor({ id, title = '', subtitle = '', authors = [], imageLinks = {}, shelf = 'none' }) {
+  constructor({
+    id, title = '', subtitle = '', authors = [], imageLinks = {}, shelf = 'none',
+  }) {
     this.id = id;
     this.title = title;
     this.subtitle = subtitle;
