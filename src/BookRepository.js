@@ -21,14 +21,10 @@ export const update = book =>
   );
 
 export const search = (query, allBooks) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     BooksAPI.search(query, MAX_API_RESULTS).then((results) => {
       if (results.error) {
-        resolve({
-          books: [],
-          query,
-          hasError: true,
-        });
+        reject([]);
       } else {
         const books = results.map(book => new BookModel(book));
         books.forEach((book, index) => {
@@ -38,11 +34,7 @@ export const search = (query, allBooks) =>
             }
           });
         });
-        resolve({
-          books,
-          query,
-          hasError: false,
-        });
+        resolve(books);
       }
     });
   });

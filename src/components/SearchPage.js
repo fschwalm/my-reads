@@ -1,49 +1,63 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BookGrid from './bookgrid/BookGrid';
 import SearchBar from './search-bar/SearchBar';
 import BookModel from '../model/BookModel';
+import SearchResult from './searchResult/SearchResult';
 
 const propTypes = {
-  searchResult: PropTypes.shape({
-    books: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
-    query: PropTypes.any,
-    hasError: PropTypes.boolean,
-  }),
+  searchResultBooks: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
+  isWaitingResponse: PropTypes.bool,
+  hasError: PropTypes.bool,
   onSearch: PropTypes.func.isRequired,
   onUpdateBook: PropTypes.func.isRequired,
+  onClearSearch: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
-  searchResult: {
-    books: [],
-    query: '',
-    hasError: false,
-  },
+  searchResultBooks: [],
+  isWaitingResponse: false,
+  hasError: false,
 };
 
-function SearchPage({ searchResult, onSearch, onUpdateBook }) {
-  const { books, query, hasError } = searchResult;
-  const isDefaultState = query === '' && books.length === 0 && hasError === false;
-  const noResultForQuery = query !== '' && books.length === 0 && hasError;
+class SearchPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: '',
+    };
+    this.performSearch = this.performSearch.bind(this);
+  }
 
-  return (
-    <div className="search-books">
-      <SearchBar onSearch={onSearch} />
-      <div className="search-books-results">
-        {books.length > 0 && <BookGrid onUpdateBook={onUpdateBook} books={books} />}
-        {isDefaultState ? null : (
-          <div>
-            {noResultForQuery ? (
-              <p className="align-center"><b><u>{query}</u></b>&nbsp;not found.</p>
-            ) : (
-              <p className="align-center">Loading...</p>
-            )}
-          </div>
+  performSearch({ target }) {
+    const { value } = target;
+    if (!value) {
+      this.props.onClearSearch();
+      this.setState({ query: '' });
+      return;
+    }
+    this.setState({ query: value });
+    this.props.onSearch(this.state.query);
+  }
+
+  render() {
+    const {
+      searchResultBooks, isWaitingResponse, hasError, onUpdateBook,
+    } = this.props;
+    return (
+      <div className="search-books">
+        <SearchBar onSearch={this.performSearch} />
+        {this.state.query !== '' && (
+          <SearchResult
+            searchResultBooks={searchResultBooks}
+            isWaitingResponse={isWaitingResponse}
+            hasError={hasError}
+            query={this.state.query}
+            onUpdateBook={onUpdateBook}
+          />
         )}
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 SearchPage.propTypes = propTypes;

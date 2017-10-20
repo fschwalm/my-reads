@@ -10,14 +10,13 @@ class BooksApp extends React.Component {
     super(props);
     this.state = {
       allBooks: [],
-      searchResult: {
-        books: [],
-        query: '',
-        hasError: false,
-      },
+      searchResultBooks: [],
+      hasError: false,
+      isWaitingResponse: false,
     };
     this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
   }
 
   componentDidMount = () => {
@@ -27,39 +26,29 @@ class BooksApp extends React.Component {
   };
 
   handleShelfUpdate(book) {
+    this.setState({ isWaitingResponse: true });
     BookRepository.update(book).then((updatedBook) => {
       this.setState(prevState => ({
         allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
+        isWaitingResponse: false,
       }));
     });
   }
 
-  handleSearch({ target }) {
-    const { value } = target;
-    this.setState({
-      searchResult: {
-        books: [],
-        query: value,
-        hasError: false,
+  handleSearch(query) {
+    this.setState({ isWaitingResponse: true });
+    BookRepository.search(query, this.state.allBooks).then(
+      (searchResultBooks) => {
+        this.setState({ searchResultBooks, hasError: false, isWaitingResponse: false });
       },
-    });
-    if (!value) {
-      this.resetSearch();
-      return;
-    }
-    BookRepository.search(value, this.state.allBooks).then((searchResult) => {
-      this.setState({ searchResult });
-    });
+      (searchResultBooks) => {
+        this.setState({ searchResultBooks, hasError: true, isWaitingResponse: false });
+      },
+    );
   }
 
-  resetSearch() {
-    this.setState({
-      searchResult: {
-        books: [],
-        query: '',
-        hasError: false,
-      },
-    });
+  clearSearch() {
+    this.setState({ searchResultBooks: [], hasError: false });
   }
 
   render() {
@@ -69,16 +58,23 @@ class BooksApp extends React.Component {
           exact
           path="/"
           render={() => (
-            <HomePage allBooks={this.state.allBooks} onUpdateBook={this.handleShelfUpdate} />
+            <HomePage
+              allBooks={this.state.allBooks}
+              isWaitingResponse={this.state.isWaitingResponse}
+              onUpdateBook={this.handleShelfUpdate}
+            />
           )}
         />
         <Route
           path="/search"
           render={() => (
             <SearchPage
-              searchResult={this.state.searchResult}
+              searchResultBooks={this.state.searchResultBooks}
+              isWaitingResponse={this.state.isWaitingResponse}
+              hasError={this.state.hasError}
               onSearch={this.handleSearch}
               onUpdateBook={this.handleShelfUpdate}
+              onClearSearch={this.clearSearch}
             />
           )}
         />
