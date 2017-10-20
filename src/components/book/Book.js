@@ -13,34 +13,25 @@ const defaultProps = {
   book: {},
 };
 
-class Book extends React.Component {
-  constructor(props) {
-    super(props);
-    this.book = props.book;
-    this.onUpdateBook = props.onUpdateBook;
-    this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
-  }
-
-  handleShelfUpdate(updatedShelfEvent) {
-    const updatedBook = Object.assign(new BookModel({}), this.book, {
+const Book = ({ book, onUpdateBook }) => {
+  this.handleShelfUpdate = (updatedShelfEvent) => {
+    const updatedBook = Object.assign(new BookModel({}), book, {
       shelf: updatedShelfEvent.target.value,
     });
-    this.onUpdateBook(updatedBook);
-  }
+    onUpdateBook(updatedBook);
+  };
 
-  render() {
-    return (
-      <div className="book">
-        <div className="book-top">
-          <BookCover image={this.book.imageLinks.thumbnail} />
-          <BookShelfChanger onUpdateShelf={this.handleShelfUpdate} currentShelf={this.book.shelf} />
-        </div>
-        <div className="book-title">{this.book.title}</div>
-        <div className="book-authors">{this.book.authors}</div>
+  return (
+    <div className="book">
+      <div className="book-top">
+        <BookCover image={book.imageLinks.thumbnail} />
+        <BookShelfChanger onUpdateShelf={this.handleShelfUpdate} currentShelf={book.shelf} />
       </div>
-    );
-  }
-}
+      <div className="book-title">{book.title}</div>
+      <div className="book-authors">{book.authors}</div>
+    </div>
+  );
+};
 
 Book.propTypes = propTypes;
 Book.defaultProps = defaultProps;
