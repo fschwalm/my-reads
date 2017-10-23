@@ -5,6 +5,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   },
   "env": {
-    "jasmine": true
+    "jasmine": true,
+    "jest": true,
   }
 }
