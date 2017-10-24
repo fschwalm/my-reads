@@ -26,17 +26,11 @@ exports[`renders without crashing 1`] = `
           >
             Currently Reading
           </h2>
-          <div
-            className="bookshelf-books"
+          <p
+            className="align-center"
           >
-            <ol
-              className="books-grid"
-            >
-              <p>
-                Loading...
-              </p>
-            </ol>
-          </div>
+            Loading...
+          </p>
         </div>
         <div
           className="bookshelf"
@@ -46,17 +40,11 @@ exports[`renders without crashing 1`] = `
           >
             Want to Read
           </h2>
-          <div
-            className="bookshelf-books"
+          <p
+            className="align-center"
           >
-            <ol
-              className="books-grid"
-            >
-              <p>
-                Loading...
-              </p>
-            </ol>
-          </div>
+            Loading...
+          </p>
         </div>
         <div
           className="bookshelf"
@@ -66,17 +54,11 @@ exports[`renders without crashing 1`] = `
           >
             Read
           </h2>
-          <div
-            className="bookshelf-books"
+          <p
+            className="align-center"
           >
-            <ol
-              className="books-grid"
-            >
-              <p>
-                Loading...
-              </p>
-            </ol>
-          </div>
+            Loading...
+          </p>
         </div>
       </div>
     </div>
