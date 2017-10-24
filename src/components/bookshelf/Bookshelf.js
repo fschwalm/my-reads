@@ -14,11 +14,17 @@ const defaultProps = {
   books: [],
 };
 
-function Bookshelf({ title, books, onUpdateBook }) {
+function Bookshelf({
+  title, books, isWaitingResponse, onUpdateBook,
+}) {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{title}</h2>
-      <BookGrid onUpdateBook={onUpdateBook} books={books} />
+      {!isWaitingResponse ? (
+        <BookGrid onUpdateBook={onUpdateBook} books={books} />
+      ) : (
+        <p className="align-center">Loading...</p>
+      )}
     </div>
   );
 }

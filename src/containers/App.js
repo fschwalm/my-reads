@@ -20,13 +20,18 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount = () => {
-    BookRepository.getAllBooks().then((allBooks) => {
-      this.setState({ allBooks });
-    });
+    this.setState({ isWaitingResponse: true });
+    BookRepository.getAllBooks()
+      .then((allBooks) => {
+        this.setState({ allBooks, isWaitingResponse: false });
+      })
+      .catch((error) => {
+        this.setState({ hasError: true, isWaitingResponse: false });
+      });
   };
 
   handleShelfUpdate(book) {
-    this.setState({ isWaitingResponse: true });
+    // this.setState({ isWaitingResponse: true });
     BookRepository.update(book).then((updatedBook) => {
       this.setState(prevState => ({
         allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
@@ -37,14 +42,13 @@ class BooksApp extends React.Component {
 
   handleSearch(query) {
     this.setState({ isWaitingResponse: true });
-    BookRepository.search(query, this.state.allBooks).then(
-      (searchResultBooks) => {
+    BookRepository.search(query, this.state.allBooks)
+      .then((searchResultBooks) => {
         this.setState({ searchResultBooks, hasError: false, isWaitingResponse: false });
-      },
-      (searchResultBooks) => {
-        this.setState({ searchResultBooks, hasError: true, isWaitingResponse: false });
-      },
-    );
+      })
+      .catch((error) => {
+        this.setState({ searchResultBooks: [], hasError: true, isWaitingResponse: false });
+      });
   }
 
   clearSearch() {

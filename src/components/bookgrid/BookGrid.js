@@ -17,7 +17,7 @@ function BookGrid({ books, onUpdateBook }) {
     <div className="bookshelf-books">
       <ol className="books-grid">
         {books.length === 0 ? (
-          <p>Loading...</p>
+          <h3>Nothing</h3>
         ) : (
           books.map(book => (
             <li key={book.id}>
