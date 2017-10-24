@@ -3,9 +3,12 @@ import * as BooksAPI from './BooksAPI';
 
 const MAX_API_RESULTS = '20';
 export const getAllBooks = () =>
-  new Promise((resolve) => {
-    BooksAPI.getAll().then(response =>
-      resolve([].concat(...response).map(book => new BookModel(book))));
+  new Promise((resolve, reject) => {
+    BooksAPI.getAll()
+      .then(response => resolve([].concat(...response).map(book => new BookModel(book))))
+      .catch((error) => {
+        reject(error);
+      });
   });
 
 export const update = book =>
@@ -24,7 +27,7 @@ export const search = (query, allBooks) =>
   new Promise((resolve, reject) => {
     BooksAPI.search(query, MAX_API_RESULTS).then((results) => {
       if (results.error) {
-        reject([]);
+        reject(new Error(results.error));
       } else {
         const books = results.map(book => new BookModel(book));
         books.forEach((book, index) => {
