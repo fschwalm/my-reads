@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransitionGroup } from 'react-transition-group';
 import Book from '../book/Book';
 import BookModel from '../../model/BookModel';
 
@@ -19,11 +20,22 @@ function BookGrid({ books, onUpdateBook }) {
         {books.length === 0 ? (
           <h3>Nothing</h3>
         ) : (
-          books.map(book => (
-            <li key={book.id}>
-              <Book book={book} onUpdateBook={onUpdateBook} />
-            </li>
-          ))
+          <CSSTransitionGroup
+            className="books-grid"
+            transitionName="default-animation"
+            transitionAppear
+            transitionAppearTimeout={500}
+            transitionEnter
+            transitionLeave
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+          >
+            {books.map(book => (
+              <li key={book.id}>
+                <Book book={book} onUpdateBook={onUpdateBook} />
+              </li>
+            ))}
+          </CSSTransitionGroup>
         )}
       </ol>
     </div>

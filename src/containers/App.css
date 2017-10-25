@@ -183,3 +183,36 @@ body, .app {
   display: flex;
   justify-content: center;
 }
+
+/*
+  CSSTransitionGroup styles
+  https://github.com/reactjs/react-transition-group/tree/v1-stable
+  https://reactjs.org/docs/animation.html
+*/
+
+.default-animation-enter {
+  opacity: 0.01;
+}
+
+.default-animation-enter.default-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.default-animation-leave {
+  opacity: 1;
+}
+
+.default-animation-leave.default-animation-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.default-animation-appear {
+  opacity: 0.01;
+}
+
+.default-animation-appear.default-animation-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
