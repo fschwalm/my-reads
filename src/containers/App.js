@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 import SearchPage from '../components/SearchPage';
 import HomePage from '../components/HomePage';
@@ -32,12 +34,18 @@ class BooksApp extends React.Component {
 
   handleShelfUpdate(book) {
     // this.setState({ isWaitingResponse: true });
-    BookRepository.update(book).then((updatedBook) => {
-      this.setState(prevState => ({
-        allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
-        isWaitingResponse: false,
-      }));
-    });
+    BookRepository.update(book)
+      .then((updatedBook) => {
+        this.setState(prevState => ({
+          allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
+          isWaitingResponse: false,
+        }));
+      })
+      .then(() => {
+        toast.info(`The book: ${book.title} was moved to ${book.shelf}`, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      });
   }
 
   handleSearch(query) {
@@ -58,6 +66,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
+        <ToastContainer />
         <Route
           exact
           path="/"
