@@ -1,4 +1,5 @@
 import React from 'react';
+import { SyncLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
 import BookGrid from '../bookgrid/BookGrid';
 import BookModel from '../../model/BookModel';
@@ -36,7 +37,11 @@ function SearchResult({
             </b>&nbsp;not found.
           </p>
         )}
-      {isWaitingResponse && <p className="align-center">Loading...</p>}
+      {isWaitingResponse && (
+        <div className="align-center">
+          <SyncLoader margin="2" size={9} color="#52d4eb" loading={isWaitingResponse} />
+        </div>
+      )}
     </div>
   );
 }

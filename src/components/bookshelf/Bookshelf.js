@@ -1,4 +1,5 @@
 import React from 'react';
+import { BeatLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
 import BookGrid from '../bookgrid/BookGrid';
 import BookModel from '../../model/BookModel';
@@ -23,7 +24,9 @@ function Bookshelf({
       {!isWaitingResponse ? (
         <BookGrid onUpdateBook={onUpdateBook} books={books} />
       ) : (
-        <p className="align-center">Loading...</p>
+        <div className="align-center">
+          <BeatLoader margin="2" size={9} color="#52d4eb" loading={isWaitingResponse} />
+        </div>
       )}
     </div>
   );
