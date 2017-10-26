@@ -1,4 +1,4 @@
-# My Reads  
+# My Reads  [![Build Status](https://travis-ci.org/fschwalm/my-reads.svg?branch=master)](https://travis-ci.org/fschwalm/my-reads)
 Final assessment project for Udacity's React Nanodegree - Module I - Fundamentals.
 
 I explore concepts such as:  
@@ -20,7 +20,7 @@ an API server and client library that you will use to persist information as
 you interact with the application.
 
 > Udacity
- 
+
 ## Running  
 
 - Installing dependencies:
