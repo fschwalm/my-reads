@@ -1,6 +1,7 @@
 import React from 'react';
 import { SyncLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
+import searchTerms from './search-terms.json';
 import BookGrid from '../bookgrid/BookGrid';
 import BookModel from '../../model/BookModel';
 
@@ -31,11 +32,14 @@ function SearchResult({
         )}
       {!isWaitingResponse &&
         hasError && (
-          <p className="align-center">
-            <b>
-              <u>{query}</u>
-            </b>&nbsp;not found.
-          </p>
+          <div>
+            <p className="align-center">
+              <b>
+                <u>{query}</u>
+              </b>&nbsp;not found. Try one of these words:
+            </p>
+            <ul>{searchTerms.map(term => <li key={term.id}>{term.name}</li>)}</ul>
+          </div>
         )}
       {isWaitingResponse && (
         <div className="align-center">
