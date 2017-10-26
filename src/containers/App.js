@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
-import SearchPage from '../components/SearchPage';
+import SearchPage from './SearchPage';
 import HomePage from '../components/HomePage';
 import * as BookRepository from '../BookRepository';
 
