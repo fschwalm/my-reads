@@ -10,20 +10,38 @@ const defaultProps = {
   currentShelf: 'none',
 };
 
-function BookShelfChanger({ currentShelf, onUpdateShelf }) {
-  return (
-    <div className="book-shelf-changer">
-      <select value={currentShelf} onChange={onUpdateShelf}>
-        <option value="moveTo" disabled>
-          Move to...
-        </option>
-        <option value="currentlyReading">Currently Reading</option>
-        <option value="wantToRead">Want to Read</option>
-        <option value="read">Read</option>
-        <option value="none">None</option>
-      </select>
-    </div>
-  );
+class BookShelfChanger extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentShelf: props.currentShelf,
+    };
+    this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
+    this.update = this.update.bind(this);
+  }
+  handleShelfUpdate(event) {
+    this.props.onUpdateShelf(event, this.update);
+  }
+
+  update(shelf) {
+    this.setState({ currentShelf: shelf });
+  }
+
+  render() {
+    return (
+      <div className="book-shelf-changer">
+        <select value={this.state.currentShelf} onChange={this.handleShelfUpdate}>
+          <option value="moveTo" disabled>
+            Move to...
+          </option>
+          <option value="currentlyReading">Currently Reading</option>
+          <option value="wantToRead">Want to Read</option>
+          <option value="read">Read</option>
+          <option value="none">None</option>
+        </select>
+      </div>
+    );
+  }
 }
 
 BookShelfChanger.propTypes = propTypes;

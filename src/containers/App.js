@@ -32,10 +32,11 @@ class BooksApp extends React.Component {
       });
   };
 
-  handleShelfUpdate(book) {
+  handleShelfUpdate(book, callback) {
     // this.setState({ isWaitingResponse: true });
     BookRepository.update(book)
       .then((updatedBook) => {
+        callback(updatedBook.shelf);
         this.setState(prevState => ({
           allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
           isWaitingResponse: false,
