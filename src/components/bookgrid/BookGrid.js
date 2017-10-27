@@ -24,11 +24,11 @@ function BookGrid({ books, onUpdateBook }) {
             className="books-grid"
             transitionName="default-animation"
             transitionAppear
-            transitionAppearTimeout={500}
+            transitionAppearTimeout={800}
             transitionEnter
             transitionLeave
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
+            transitionEnterTimeout={800}
+            transitionLeaveTimeout={800}
           >
             {books.map(book => (
               <li key={book.id}>
