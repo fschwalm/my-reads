@@ -33,17 +33,15 @@ class BooksApp extends React.Component {
   };
 
   handleShelfUpdate(book, callback) {
-    // this.setState({ isWaitingResponse: true });
     BookRepository.update(book)
       .then((updatedBook) => {
         callback(updatedBook.shelf);
         this.setState(prevState => ({
           allBooks: prevState.allBooks.filter(b => b.id !== book.id).concat([updatedBook]),
-          isWaitingResponse: false,
         }));
       })
       .then(() => {
-        toast.info(`The book: ${book.title} was moved to ${book.shelf}`, {
+        toast.info(`The book: ${book.title} was moved successful!`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
       });
@@ -65,6 +63,9 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const {
+      allBooks, isWaitingResponse, searchResultBooks, hasError,
+    } = this.state;
     return (
       <div className="app">
         <ToastContainer />
@@ -73,8 +74,8 @@ class BooksApp extends React.Component {
           path="/"
           render={() => (
             <HomePage
-              allBooks={this.state.allBooks}
-              isWaitingResponse={this.state.isWaitingResponse}
+              allBooks={allBooks}
+              isWaitingResponse={isWaitingResponse}
               onUpdateBook={this.handleShelfUpdate}
             />
           )}
@@ -83,9 +84,9 @@ class BooksApp extends React.Component {
           path="/search"
           render={() => (
             <SearchPage
-              searchResultBooks={this.state.searchResultBooks}
-              isWaitingResponse={this.state.isWaitingResponse}
-              hasError={this.state.hasError}
+              searchResultBooks={searchResultBooks}
+              isWaitingResponse={isWaitingResponse}
+              hasError={hasError}
               onSearch={this.handleSearch}
               onUpdateBook={this.handleShelfUpdate}
               onClearSearch={this.clearSearch}

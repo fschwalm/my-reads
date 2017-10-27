@@ -8,11 +8,13 @@ const propTypes = {
   title: PropTypes.string,
   books: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
   onUpdateBook: PropTypes.func.isRequired,
+  isWaitingResponse: PropTypes.bool,
 };
 
 const defaultProps = {
   title: '',
   books: [],
+  isWaitingResponse: false,
 };
 
 function Bookshelf({

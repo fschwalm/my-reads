@@ -1,14 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function BookCover(props) {
-  // TODO: Check which one is better
-  /* <img src={props.image + '.jpg'} width="128" height="193" alt="" /> */
+const propTypes = {
+  image: PropTypes.string,
+};
+
+const defaultProps = {
+  image: '',
+};
+
+function BookCover({ image }) {
   return (
     <div
       className="book-cover"
-      style={{ width: 128, height: 193, backgroundImage: `url(${props.image})` }}
+      style={{ width: 128, height: 193, backgroundImage: `url(${image})` }}
     />
   );
 }
+
+BookCover.propTypes = propTypes;
+BookCover.defaultProps = defaultProps;
 
 export default BookCover;

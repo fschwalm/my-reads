@@ -29,14 +29,17 @@ class Book extends React.Component {
   }
 
   render() {
+    const {
+      imageLinks, shelf, title, authors,
+    } = this.book;
     return (
       <div className="book">
         <div className="book-top">
-          <BookCover image={this.book.imageLinks.thumbnail} />
-          <BookShelfChanger onUpdateShelf={this.handleShelfUpdate} currentShelf={this.book.shelf} />
+          <BookCover image={imageLinks.thumbnail} />
+          <BookShelfChanger onUpdateShelf={this.handleShelfUpdate} currentShelf={shelf} />
         </div>
-        <div className="book-title">{this.book.title}</div>
-        <div className="book-authors">{this.book.authors}</div>
+        <div className="book-title">{title}</div>
+        <div className="book-authors">{authors}</div>
       </div>
     );
   }
