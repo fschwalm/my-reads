@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchBar from '../components/search-bar/SearchBar';
+import SearchBar from './search-bar/SearchBar';
 import BookModel from '../model/BookModel';
-import SearchResult from '../components/searchResult/SearchResult';
+import SearchResult from './searchResult/SearchResult';
 
 const propTypes = {
   searchResultBooks: PropTypes.arrayOf(PropTypes.instanceOf(BookModel)),
