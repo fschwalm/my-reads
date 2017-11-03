@@ -5,7 +5,7 @@ const MAX_API_RESULTS = '20';
 export const getAllBooks = () =>
   new Promise((resolve, reject) => {
     BooksAPI.getAll()
-      .then(response => resolve([].concat(...response).map(book => new BookModel(book))))
+      .then(response => resolve(response.map(book => new BookModel(book))))
       .catch((error) => {
         reject(error);
       });
