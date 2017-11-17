@@ -1,4 +1,4 @@
-# My Reads  [![Build Status](https://travis-ci.org/fschwalm/my-reads.svg?branch=master)](https://travis-ci.org/fschwalm/my-reads)
+# My Reads  [![Build Status](https://travis-ci.org/fschwalm/my-reads.svg?branch=master)](https://travis-ci.org/fschwalm/my-reads) [![Coverage Status](https://coveralls.io/repos/github/fschwalm/my-reads/badge.svg?branch=master)](https://coveralls.io/github/fschwalm/my-reads?branch=master)
 Final assessment project for Udacity's React Nanodegree - Module I - Fundamentals.
 
 I explore concepts such as:  
