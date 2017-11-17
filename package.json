@@ -6,6 +6,7 @@
   "homepage": "https://fschwalm.github.io/my-reads/",
   "description": "Final project of React Nanodegree fundamentals",
   "dependencies": {
+    "coveralls": "^3.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -33,6 +34,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   }
 }
