@@ -37,5 +37,11 @@
     "eject": "react-scripts eject",
     "coverage": "react-scripts test --coverage --env=jsdom",
     "coveralls": "npm run coverage && node node_modules/.bin/coveralls < coverage/lcov.info"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ]
   }
 }
